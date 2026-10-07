@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: ItConnect API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8000
+    description: Environnement local
+path:
+  /auth/register:
+    post:
+      summary: Creer un compte utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+      responses:
+        "201":
+          description: Compte Cree avec succes
+        "409":
+          description: Conflit, cette addresse mail est deja utilise
+
+  /auth/login:
+    post:
+      summary: Connexion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+      reponses:
+        "200":
+          description: Connexion reussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  acces_token:
+                    type: string
+                  token_type:
+                    type: string
+        "401":
+          description: Email ou mot de passe incorect
+
+  /users/me:
+    get:
+      summary: Recuperer le profil de l'utilisateur connecte
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Profil utilisateur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+        "401":
+          description: Non authentifie
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
