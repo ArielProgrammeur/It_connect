@@ -5,7 +5,7 @@ info:
 servers:
   - url: http://localhost:8000
     description: Environnement local
-path:
+paths:
   /auth/register:
     post:
       summary: Creer un compte utilisateur
@@ -28,7 +28,6 @@ path:
           description: Compte Cree avec succes
         "409":
           description: Conflit, cette addresse mail est deja utilise
-
   /auth/login:
     post:
       summary: Connexion
@@ -46,7 +45,7 @@ path:
                 password:
                   type: string
                   minLength: 8
-      reponses:
+      responses:
         "200":
           description: Connexion reussie
           content:
@@ -60,7 +59,6 @@ path:
                     type: string
         "401":
           description: Email ou mot de passe incorect
-
   /users/me:
     get:
       summary: Recuperer le profil de l'utilisateur connecte
@@ -80,10 +78,65 @@ path:
                     type: string
         "401":
           description: Non authentifie
-
+  /posts:
+    get:
+      summary: Lister des posts
+      responses:
+        "200":
+          description: Listes des posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                      id:
+                        type: integer
+                      author_id:
+                        type: integer
+                      content:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+    post:
+      summary: Creer un post
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content]
+              properties:
+                content:
+                  type: string
+      responses:
+        "201":
+          description: Post cree avec succes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  author_id:
+                    type: integer
+                  content:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+        "401":
+          description: Non Authentifie
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
