@@ -5,7 +5,7 @@ les posts des autres, de les liker, et d'y laisser des commentaires.
 
 ## Prerequis 
 
-Sur la machine hote (la machine qui vas heberger et lancer le prtojet, il faut avoir installe :
+Sur la machine hote (la machine qui vas heberger et lancer le prtojet), il faut avoir installe :
 
 - `Docker`
 - `Git`
@@ -34,4 +34,4 @@ la route nous renvoie juste {"status: "ok}
 
 La doc interactive de l'API (generee automatiquement par FastAPI la (Swagger UI) a partir du contrat) est disponible sur :
 
-```https://localhost:8000/docs
+```https://localhost:8000/docs```
