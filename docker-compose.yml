@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: itconnect_db
+    environment:
+      POSTGRES_USER: itconnect_user
+      POSTGRES_PASSWORD: itconnect_password
+      POSTGRES_DB: itconnect_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - itconnect_db_data:/var/lib/postgresql/data
+volumes:
+    itconnect_db_data:
