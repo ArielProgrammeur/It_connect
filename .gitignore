@@ -15,3 +15,5 @@ out/
 # Divers
 .DS_Store
 *.log
+./vscode/
+

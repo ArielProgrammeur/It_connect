@@ -3,9 +3,9 @@ services:
     image: postgres:16-alpine
     container_name: itconnect_db
     environment:
-      POSTGRES_USER: itconnect_user
-      POSTGRES_PASSWORD: itconnect_password
-      POSTGRES_DB: itconnect_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5433:5432"
     volumes:
