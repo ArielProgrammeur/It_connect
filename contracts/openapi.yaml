@@ -107,8 +107,13 @@ paths:
                         type: integer
                       author_id:
                         type: integer
+                      title:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
                       content:
                         type: string
+                        maxLength: 1000
                       created_at:
                         type: string
                         format: date-time
@@ -122,10 +127,15 @@ paths:
           application/json:
             schema:
               type: object
-              required: [content]
+              required: [title, content]
               properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
                 content:
                   type: string
+                  maxLength: 1000
       responses:
         "201":
           description: Post cree avec succes
@@ -138,8 +148,13 @@ paths:
                     type: integer
                   author_id:
                     type: integer
+                  title:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
                   content:
                     type: string
+                    maxLength: 1000
                   created_at:
                     type: string
                     format: date-time
