@@ -24,5 +24,5 @@ def  created_post(payload: PostRequest, db: Session = Depends(get_db), current_u
 
 @router.get("", response_model=list[PostResponse])
 def list_posts(db: Session = Depends(get_db)):
-  return db.query(Post).order_by(Post.created_at.desc()).all()
+    return db.query(Post).order_by(Post.created_at.desc()).all()
     
