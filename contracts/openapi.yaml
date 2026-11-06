@@ -178,7 +178,7 @@ paths:
         "201": 
           description: Like enregistre avec succes
         "404":
-          description: Post non trouve
+          description: Post Introuvable
         "409":
           description: Deja like par cet utilisateur
     delete:
