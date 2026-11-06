@@ -246,6 +246,8 @@ paths:
               properties:
                 content:
                   type: string
+                  minLength: 1
+                  maxLength: 500
       responses:
         "201":
           description: Commentaire cree avec succes
