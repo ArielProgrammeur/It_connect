@@ -13,4 +13,4 @@ class PostResponse(BaseModel):
     title: str = Field(..., min_length=1, max_length=255, description="Titre du post")
     content: str = Field(..., min_length=1, max_length=1000, description="Contenu du post")
     author_id: int = Field(..., description="Auteur du post")
-    created_at: datetime = Field(..., description="Date de creation du post")
+    created_at: datetime = Field(..., description="Date de creation du post")   

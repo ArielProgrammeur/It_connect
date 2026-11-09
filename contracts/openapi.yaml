@@ -39,7 +39,7 @@ paths:
                     type: string
                     format: date-time
         "409":
-          description: Conflit, cette addresse mail est deja utilise
+          description: Conflit, cette adresse mail est deja utilise
   /auth/login:
     post:
       summary: Connexion
@@ -65,7 +65,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  acces_token:
+                  access_token:
                     type: string
                   token_type:
                     type: string
@@ -88,6 +88,9 @@ paths:
                     type: integer
                   email:
                     type: string
+                  created_at:
+                    type: string
+                    format: date-time
         "401":
           description: Non authentifie
   /posts:
@@ -163,48 +166,93 @@ paths:
                     format: date-time
         "401":
           description: Non Authentifie
+  /posts/{post_id}:
+    parameters: 
+      - name: post_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    delete:
+      summary: Supprimer un post (Auteur Uniquement)
+      security:
+        - bearerAuth: []
+      responses:
+        "204":
+          description: Post Supprime avec ses commentaires et ses likes
+        "401":
+          description: Non authentifie
+        "403":
+          description: Non autorise (Vous n'etes pas l'auteur du post)
+        "404":
+          description: Post Introuvable
+    get:
+      summary: Recuperer un post par son ID
+      responses:
+        "200":
+          description: Post trouve
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  author_id:
+                    type: integer
+                  title:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  content:
+                    type: string
+                    minLength: 1
+                    maxLength: 1000
+                  created_at:
+                    type: string
+                    format: date-time
+        "404":
+          description: Post Introuvable
   /posts/{post_id}/likes:
+    parameters: 
+      - name: post_id
+        in: path
+        required: true
+        schema:
+          type: integer
     post:
       summary: Liker un post
       security:
         - bearerAuth: []
-      parameters:
-        - name: post_id
-          in: path
-          required: true
-          schema:
-            type: integer
       responses:
         "201": 
           description: Like enregistre avec succes
         "404":
-          description: Post non trouve
+          description: Post Introuvable
+        "401":
+          description: Non Authentifie
         "409":
           description: Deja like par cet utilisateur
     delete:
       summary: Retirer son like
       security:
         - bearerAuth: []
-      parameters:
-        - name: post_id
-          in: path
-          required: true
-          schema:
-            type: integer
       responses:
         "204":
           description: Like retire avec succes
+        "401":
+          description: Non Authentifie
         "404":
           description: Post non trouve
   /posts/{post_id}/comments:
+    parameters: 
+      - name: post_id
+        in: path
+        required: true
+        schema:
+          type: integer
     get:
       summary: Lister les commentaires 
-      parameters:
-        - name: post_id
-          in: path
-          required: true
-          schema:
-            type: integer
       responses:
         "200":
           description: Liste des commentaires
@@ -226,16 +274,12 @@ paths:
                       created_at:
                         type: string
                         format: date-time
+        "404":
+          description: Post Introuvable
     post:
       summary: Ajouter un commentaire
       security:
         - bearerAuth: []
-      parameters:
-        - name: post_id
-          in: path
-          required: true
-          schema:
-            type: integer
       requestBody:
         required: true
         content:
@@ -246,6 +290,8 @@ paths:
               properties:
                 content:
                   type: string
+                  minLength: 1
+                  maxLength: 500
       responses:
         "201":
           description: Commentaire cree avec succes
@@ -267,6 +313,8 @@ paths:
                     format: date-time
         "401":
           description: Non Authentifie 
+        "404":
+          description: Post Introuvable
 components:
   securitySchemes:
     bearerAuth:
