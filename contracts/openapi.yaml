@@ -179,7 +179,7 @@ paths:
         - bearerAuth: []
       responses:
         "204":
-          description: Post Supprime avec succes
+          description: Post Supprime avec ses commentaires et ses likes
         "401":
           description: Non authentifie
         "403":
